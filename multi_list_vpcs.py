@@ -17,12 +17,29 @@ for account_id in account_ids:
     response = ec2_client.describe_vpcs()
 
     for response in response['Vpcs']:
+        name = 'NA'
+        application = 'NA'
+        created_by = 'NA'
+        creation_date = 'NA'
+        env = 'NA'
+        description = 'NA'
         try:
             for tag in response['Tags']:
                 key = tag['Key']
                 value = tag['Value']
                 if key == 'Name':
                     name = value
-                print(f"{name}")
+                elif key == 'Application':
+                    application = value
+                elif key == 'CreatedBy':
+                    created_by = value
+                elif key == 'CreationDate':
+                    creation_date = value
+                elif key == 'Environment':
+                    env = value
+                elif key == 'Description':
+                    description = value
+            print(f"{name},{application},{env},{created_by},{creation_date},{description}")
         except KeyError:
             pass
+        
